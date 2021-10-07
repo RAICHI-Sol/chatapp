@@ -1,0 +1,21 @@
+{% extends "main/base.html"%}  <!-- 継承するテンプレートを指定 -->
+{% load static %}
+{% block extra_style %}  <!-- 上書きするブロック名（extra_style）を指定して、index.html 専用の CSS を追加 -->
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/index.css' %}">
+{% endblock %}
+{% block header %}{% endblock %}  <!-- index ページはヘッダー不要なので何も書かない -->
+{% block content %}  <!-- index ページの中身を記述 -->
+    <div class="index-button__wrapper">
+        <a href="{% url 'login_view' %}">
+            <span class="index-button">
+                ログイン
+            </span>
+        </a>
+        <a href="{% url 'signup_view' %}">
+            <span class="index-button">
+                会員登録
+            </span>
+        </a>
+    </div>
+{% endblock content %}
+{% block footer %}{% endblock %}  <!-- index ページはフッター不要なので何も書かない -->

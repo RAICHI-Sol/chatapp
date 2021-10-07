@@ -1,0 +1,37 @@
+/* headerを避ける */
+.friends {
+    padding: 64px 0;
+}
+
+/* margin:autoと横幅の指定でcalcを上手く利用することで、 */
+/* 単位が違う横幅指定をしつつ */
+/* 全体のバランスを取れるように設計する */
+.friends__list {
+    width: calc(100% - 32px);
+    height: 4rem;
+    padding: 8px 16px;
+    list-style: none;
+    border-bottom: solid 1px #888;
+}
+
+/* 下にしか枠線を引いていないので、初めの要素にだけ上にも枠線を引くように設定 */
+.friends__list:first-child {
+    border-top: solid 1px #888;
+}
+
+.friends__list-link {
+    text-decoration: none;
+    color: #000;
+}
+
+.friends__list-wrap {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.friends__list-username {
+    font-size: 1.2rem;
+    width: calc(100% - 4rem - 8px);
+    margin: 0 0 0 auto;
+}

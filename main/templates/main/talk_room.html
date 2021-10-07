@@ -1,0 +1,60 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block extra_style %}
+<link rel="stylesheet" type="text/css" href="{% static 'main/css/talk_room.css' %}">
+{% endblock %}
+
+{% block header-title %}{{ friend.username }}{% endblock %}
+{% block talk_room %}
+<a href="{% url 'friends' %}" class="talk_room__back-btn">
+    <i class="fas fa-angle-left"></i>
+</a>
+<!-- 更新ボタンは同ページへのリンクで実現できます -->
+<a href="" class="talk_room__reload">更新</a>
+{% endblock %}
+{% block content %}
+<div class="talk_room">
+    <!-- 過去のチャットの表示部分 -->
+    <ul class="talk_room__chatboard" id="talk_room__chatboard">
+        <!-- チャットを古い順にfor文で表示します -->
+        {% for talk in talk %}
+        <!-- 自分→友人と友人→自分のメッセージで表示を変わることに注意 -->
+            {% if talk.talk_from == user %}
+            <li class="talk_room__chatboard-content talk_room__chatboard-content-user">
+                <p class="talk_room__chatboard-content-name">＞{{ talk.talk_from }}</p>
+                <p class="talk_room__chatboard-content-text">{{ talk.talk }}</p>
+                <p class="talk_room__chatboard-content-time">{{ talk.time|date:"m/d" }}<br>{{ talk.time|date:"H:i" }}</p>
+            </li>
+            {% else %}
+            <li class="talk_room__chatboard-content talk_room__chatboard-content-friend">
+                <p class="talk_room__chatboard-content-name">＞{{ talk.talk_from }}</p>
+                <p class="talk_room__chatboard-content-text">{{ talk.talk }}</p>
+                <p class="talk_room__chatboard-content-time">{{ talk.time|date:"m/d" }}<br>{{ talk.time|date:"H:i" }}</p>
+            </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+
+    <!-- チャットの送信フォーム -->
+    <form class="talk_room__sendbox" method="POST">
+        {% csrf_token %}
+        {{ form.talk }}
+        <button class="talk_room__sendbox-btn" type="submit">送信</button>
+    </form>
+
+</div>
+{% endblock content %}
+
+{% block footer %}{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.getElementById("id_talk").setAttribute("autocomplete", "off");
+    // トークの表示を新しいものを下にしているため、最下にスクロールさせる
+    function scrollToBottom() {
+        var height = document.getElementById("talk_room__chatboard");
+        window.scroll(0, height.scrollHeight);
+    }
+    scrollToBottom();
+</script>
+{% endblock %}
