@@ -100,6 +100,31 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+#LOGGING
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "simple": {
+            "format": "%(levelname)s: %(message)s",
+        }
+    },
+    "handlers": {
+        "stream": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            "formatter": "simple",
+        },
+    },
+    "loggers": {
+        "main": {
+            "handlers": ["stream"],
+            "level": "INFO",
+            "propagate": True,
+        },
+    },
+}
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/

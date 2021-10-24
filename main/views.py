@@ -1,4 +1,5 @@
 import django
+import logging # 追加箇所(ロギング)
 from django.contrib.auth import authenticate,login
 from django.shortcuts import redirect, render
 from django.contrib.auth.forms import PasswordChangeForm # 追加
@@ -20,6 +21,8 @@ from .forms import (
     MailSettingForm,
 )
 from .models import User
+
+logger = logging.getLogger(__name__)
 
 def index(request):
     return render(request, "main/index.html")
@@ -68,6 +71,7 @@ def talk_room(request, user_id):
             text = form.cleaned_data.get("talk")
             new_talk =  Talk(talk = text,talk_from=user,talk_to=friend)
             new_talk.save()
+            logger.info("message sended: %s to %s", user.username, friend.username) #追記
             return render(request,"main/talk_room.html",context)
     return render(request,"main/talk_room.html",context)
     
