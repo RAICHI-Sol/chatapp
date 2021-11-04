@@ -64,7 +64,7 @@ class SignupViewTests(TestCase):
         return super().setUpClass()
 
     def test_get(self):
-        res = self.client.get('http://127.0.0.1:8000/signup') #変更箇所
+        res = self.client.get("/signup") #変更箇所
         self.assertEqual(res.status_code,200)
         self.assertTemplateUsed(res, "main/signup.html") #変更箇所
 
@@ -75,7 +75,7 @@ class SignupViewTests(TestCase):
             "password1": "thisistest",
             "password2": "thisistest",
         }
-        res = self.client.post('http://127.0.0.1:8000/signup', params) #変更箇所
+        res = self.client.post("/signup", params) #変更箇所
 
         self.assertRedirects(
             res,
@@ -92,7 +92,7 @@ class SignupViewTests(TestCase):
             "password1": "thisistest",
             "password2": "thisistest",
         }
-        res = self.client.post('http://127.0.0.1:8000/signup', params) #変更箇所
+        res = self.client.post("/signup", params) #変更箇所
         self.assertEqual(res.status_code, 200)
         self.assertTemplateUsed(res, "main/signup.html") #変更箇所
 
@@ -133,7 +133,7 @@ class TalkRoomViewTests(TestCase, TestsWithAuthMixin):
             email=cls._friend_email,
             password=cls._friend_password,
         )
-        cls._talk_room_url = f"http://127.0.0.1:8000/talk_room/{cls._friend.id}/" #変更箇所
+        cls._talk_room_url = f"/talk_room/{cls._friend.id}/"
 
     def test_get(self):
         self.login()
